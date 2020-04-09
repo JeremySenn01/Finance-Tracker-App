@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {ISpending} from '../data.module';
 
 @Component({
   selector: 'app-spendings',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./spendings.component.css']
 })
 export class SpendingsComponent implements OnInit {
+
+  @Input() spendings: ISpending[];
 
   constructor() { }
 

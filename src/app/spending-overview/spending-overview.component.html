@@ -1,0 +1,11 @@
+<div>
+  <button (click)="setTimeUnit(TimeUnitEnum.WEEK)">Week</button>
+  <button (click)="setTimeUnit(TimeUnitEnum.MONTH)">Month</button>
+  <button (click)="setTimeUnit(TimeUnitEnum.YEAR)">Year</button>
+</div>
+<div>
+  <app-spendings [spendings]="filteredSpendings"></app-spendings>
+</div>
+<div>
+  <app-summary></app-summary>
+</div>

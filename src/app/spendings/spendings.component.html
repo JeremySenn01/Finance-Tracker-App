@@ -1,1 +1,5 @@
-<p>spendings works!</p>
+<div *ngIf="spendings">
+  <div *ngFor="let spending of spendings">
+    <span>{{spending.description}} / {{spending.amount}} CHF</span>
+  </div>
+</div>

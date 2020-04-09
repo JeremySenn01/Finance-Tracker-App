@@ -1,0 +1,19 @@
+import {IUser} from './data.module';
+
+export const USERS: IUser[] = [
+  {
+    id: 1,
+    email: 'jeremy.senn@gmail.com',
+    password: '123456'
+  },
+  {
+    id: 2,
+    email: 'jan.hasler@gmail.com',
+    password: 'iamgay'
+  },
+  {
+    id: 3,
+    email: 'lenni.dePenni@gmail.com',
+    password: 'mybrogay'
+  }
+];
