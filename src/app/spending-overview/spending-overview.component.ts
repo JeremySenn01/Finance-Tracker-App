@@ -85,8 +85,6 @@ export class SpendingOverviewComponent implements OnInit {
     }
     this.startDate = startDate;
     this.endDate = endDate;
-
-    console.log(typeof this.startDate);
   }
 
   setCurrentDate(): void {

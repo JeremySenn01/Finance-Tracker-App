@@ -1,1 +1,27 @@
-<p>summary works!</p>
+<div>
+  <h2>Summary</h2>
+  <div>
+    <div>Total spendings</div>
+    <div>{{this.spendingsTotal | currency:'Chf '}}</div>
+  </div>
+  <div>
+    <div>Past spendings</div>
+    <div>{{this.spendingsPast | currency:'Chf '}}</div>
+  </div>
+  <div>
+    <div>Future spendings</div>
+    <div>{{this.spendingsFuture | currency:'Chf '}}</div>
+  </div>
+  <div>
+    <div>Spendings this Week</div>
+    <div>{{this.spendingsCurrentWeek | currency:'Chf '}}</div>
+  </div>
+  <div>
+    <div>Spendings this Month</div>
+    <div>{{this.spendingsCurrentMonth | currency:'Chf '}}</div>
+  </div>
+  <div>
+    <div>Spendings this Year</div>
+    <div>{{this.spendingsCurrentYear | currency:'Chf '}}</div>
+  </div>
+</div>

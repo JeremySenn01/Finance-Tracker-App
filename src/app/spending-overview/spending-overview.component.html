@@ -13,6 +13,6 @@
     <app-spendings [spendings]="filteredSpendings" (spendingsChange)="getSpendings()"></app-spendings>
   </div>
   <div>
-    <app-summary></app-summary>
+    <app-summary [spendings]="spendings" [startDate]="startDate" [endDate]="endDate"></app-summary>
   </div>
 </div>

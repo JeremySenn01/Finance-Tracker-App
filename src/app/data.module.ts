@@ -14,11 +14,11 @@ export interface IUser {
 
 export enum ESpendingType {
   SINGLE,
-  SERIES
+  SERIES,
 }
 
 export enum ETimeUnit {
   WEEK,
   MONTH,
-  YEAR
+  YEAR,
 }

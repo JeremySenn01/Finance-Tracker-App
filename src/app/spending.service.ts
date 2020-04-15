@@ -1,10 +1,10 @@
-import {Injectable} from '@angular/core';
-import {ISpending} from './data.module';
-import {SPENDINGS} from './mock-spendings';
-import {Observable, of} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { ISpending } from './data.module';
+import { SPENDINGS } from './mock-spendings';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SpendingService {
 
