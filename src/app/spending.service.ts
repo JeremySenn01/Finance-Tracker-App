@@ -22,9 +22,10 @@ export class SpendingService {
     return of(spending);
   }
 
-  removeSpending(spending: ISpending): void {
+  removeSpending(spending: ISpending): Observable<ISpending> {
     const index = this.spendings.indexOf(spending);
     this.spendings.splice(index, 1);
+    return of(spending);
   }
 
   updateSpending(spending: ISpending): Observable<ISpending> {

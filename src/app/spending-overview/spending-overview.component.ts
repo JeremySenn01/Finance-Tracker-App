@@ -14,37 +14,84 @@ export class SpendingOverviewComponent implements OnInit {
   filteredSpendings: ISpending[];
   timeUnit: ETimeUnit = ETimeUnit.MONTH;
   TimeUnitEnum = ETimeUnit;
+  selectedWeek;
+  selectedMonth;
+  selectedYear;
+  startDate;
+  endDate;
 
   constructor(private spendingService: SpendingService) {
   }
 
   ngOnInit(): void {
+    this.setCurrentDate();
     this.getSpendings();
   }
 
   getSpendings(): void {
-    this.spendingService.getSpendings().subscribe(spendings => this.spendings = spendings);
-    this.filteredSpendings = this.spendings;
+    this.spendingService.getSpendings().subscribe(spendings => {
+      this.spendings = spendings;
+      this.filterSpendings();
+    });
   }
 
   setTimeUnit(timeUnit: ETimeUnit): void {
     this.timeUnit = timeUnit;
+    this.setCurrentDate();
     this.filterSpendings();
   }
 
   filterSpendings(): void {
-    let filteredSpendings: ISpending[] = [];
+    this.filteredSpendings = this.spendings.filter(s => moment(s.date).isBetween(this.startDate, this.endDate, 'day', '[]'));
+  }
+
+  forward() {
     if (this.timeUnit === ETimeUnit.WEEK) {
-      const weekOfYear = moment().format('W');
-      filteredSpendings = this.spendings.filter(s => moment(s.date).format('W') === weekOfYear);
+      this.selectedWeek++;
     } else if (this.timeUnit === ETimeUnit.MONTH) {
-      const monthOfYear = moment().format('M');
-      filteredSpendings = this.spendings.filter(s => moment(s.date).format('M') === monthOfYear);
+      this.selectedMonth++;
     } else if (this.timeUnit === ETimeUnit.YEAR) {
-      const year = moment().format('Y');
-      filteredSpendings = this.spendings.filter(s => moment(s.date).format('Y') === year);
+      this.selectedYear++;
     }
-    this.filteredSpendings = filteredSpendings;
+    this.generateDate();
+    this.filterSpendings();
+  }
+
+  back() {
+    if (this.timeUnit === ETimeUnit.WEEK) {
+      this.selectedWeek--;
+    } else if (this.timeUnit === ETimeUnit.MONTH) {
+      this.selectedMonth--;
+    } else if (this.timeUnit === ETimeUnit.YEAR) {
+      this.selectedYear--;
+    }
+    this.generateDate();
+    this.filterSpendings();
+  }
+
+  generateDate(): void {
+
+    let startDate;
+    let endDate;
+    if (this.timeUnit === ETimeUnit.WEEK) {
+      startDate = moment().day('Monday').year(this.selectedYear).week(this.selectedWeek);
+      endDate = moment().day('Sunday').year(this.selectedYear).week(this.selectedWeek + 1);
+    } else if (this.timeUnit === ETimeUnit.MONTH) {
+      startDate = moment().year(this.selectedYear).month(this.selectedMonth).startOf('month');
+      endDate = moment(startDate).endOf('month');
+    } else if (this.timeUnit === ETimeUnit.YEAR) {
+      startDate = moment().year(this.selectedYear).month(0).startOf('month');
+      endDate = moment(startDate).endOf('year');
+    }
+    this.startDate = startDate;
+    this.endDate = endDate;
+  }
+
+  setCurrentDate(): void {
+    this.selectedWeek = +moment().format('W');
+    this.selectedMonth = +moment().format('M') - 1;
+    this.selectedYear = +moment().format('Y');
+    this.generateDate();
   }
 
 }

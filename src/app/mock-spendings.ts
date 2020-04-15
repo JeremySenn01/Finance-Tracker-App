@@ -40,7 +40,7 @@ export const SPENDINGS: ISpending[] = [
     id: 6,
     description: 'The coochie Fund',
     amount: 69,
-    date: new Date(2020, 1),
+    date: new Date(2020, 1, 20),
     type: ESpendingType.SINGLE
   }
 ];

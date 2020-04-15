@@ -1,5 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ISpending} from '../data.module';
+import {SpendingService} from '../spending.service';
 
 @Component({
   selector: 'app-spendings',
@@ -9,10 +10,19 @@ import {ISpending} from '../data.module';
 export class SpendingsComponent implements OnInit {
 
   @Input() spendings: ISpending[];
+  @Output() spendingsChange = new EventEmitter<any>();
 
-  constructor() { }
+  constructor(private spendingService: SpendingService) { }
 
   ngOnInit(): void {
+  }
+
+  deleteSpending(spending: ISpending) {
+    this.spendingService.removeSpending(spending).subscribe(() => this.spendingsChange.emit());
+  }
+
+  editSpending(spending: ISpending) {
+    this.spendingService.updateSpending(spending).subscribe(() => this.spendingsChange.emit());
   }
 
 }
