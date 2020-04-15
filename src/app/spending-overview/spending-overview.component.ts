@@ -1,12 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-import {SpendingService} from '../spending.service';
-import {ETimeUnit, ISpending} from '../data.module';
+import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
+import { ETimeUnit, ISpending } from '../data.module';
+import { SpendingService } from '../spending.service';
 
 @Component({
   selector: 'app-spending-overview',
   templateUrl: './spending-overview.component.html',
-  styleUrls: ['./spending-overview.component.css']
+  styleUrls: ['./spending-overview.component.css'],
 })
 export class SpendingOverviewComponent implements OnInit {
 
@@ -14,11 +14,11 @@ export class SpendingOverviewComponent implements OnInit {
   filteredSpendings: ISpending[];
   timeUnit: ETimeUnit = ETimeUnit.MONTH;
   TimeUnitEnum = ETimeUnit;
-  selectedWeek;
-  selectedMonth;
-  selectedYear;
-  startDate;
-  endDate;
+  selectedWeek: number;
+  selectedMonth: number;
+  selectedYear: number;
+  startDate: any;
+  endDate: any;
 
   constructor(private spendingService: SpendingService) {
   }
@@ -85,6 +85,8 @@ export class SpendingOverviewComponent implements OnInit {
     }
     this.startDate = startDate;
     this.endDate = endDate;
+
+    console.log(typeof this.startDate);
   }
 
   setCurrentDate(): void {
