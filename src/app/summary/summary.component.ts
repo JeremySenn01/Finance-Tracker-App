@@ -1,6 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import * as moment from 'moment';
-import {ISpending} from '../data.module';
+import { ISpending } from '../data.module';
 
 @Component({
   selector: 'app-summary',
