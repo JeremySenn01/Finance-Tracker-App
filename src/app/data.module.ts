@@ -12,6 +12,11 @@ export interface IUser {
   password: string;
 }
 
+export interface IDialogProps {
+  spending: ISpending;
+  operation: EOperation;
+}
+
 export enum ESpendingType {
   SINGLE,
   SERIES,
@@ -21,4 +26,9 @@ export enum ETimeUnit {
   WEEK,
   MONTH,
   YEAR,
+}
+
+export enum EOperation {
+  NEW,
+  UPDATE,
 }

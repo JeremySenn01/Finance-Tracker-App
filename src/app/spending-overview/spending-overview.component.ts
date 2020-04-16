@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import * as moment from 'moment';
-import { ETimeUnit, ISpending } from '../data.module';
+import { EOperation, ETimeUnit, IDialogProps, ISpending } from '../data.module';
+import { NewSpendingComponent } from '../new-spending/new-spending.component';
 import { SpendingService } from '../spending.service';
 
 @Component({
@@ -20,7 +22,7 @@ export class SpendingOverviewComponent implements OnInit {
   startDate: any;
   endDate: any;
 
-  constructor(private spendingService: SpendingService) {
+  constructor(private spendingService: SpendingService, public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -32,6 +34,19 @@ export class SpendingOverviewComponent implements OnInit {
     this.spendingService.getSpendings().subscribe(spendings => {
       this.spendings = spendings;
       this.filterSpendings();
+    });
+  }
+
+  openDialog(): void {
+    const spendingProps: IDialogProps = { spending: null, operation: EOperation.NEW};
+    const dialogRef = this.dialog.open(NewSpendingComponent, {
+      data: spendingProps,
+      height: '400px',
+      width: '400px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      // do something
     });
   }
 
