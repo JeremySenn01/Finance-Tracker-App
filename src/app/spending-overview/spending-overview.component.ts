@@ -37,7 +37,7 @@ export class SpendingOverviewComponent implements OnInit {
     });
   }
 
-  openDialog(): void {
+  newSpending(): void {
     const spendingProps: IDialogProps = { spending: null, operation: EOperation.NEW};
     const dialogRef = this.dialog.open(NewSpendingComponent, {
       data: spendingProps,
@@ -46,7 +46,7 @@ export class SpendingOverviewComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      // do something
+      this.spendingService.addSpending(result);
     });
   }
 

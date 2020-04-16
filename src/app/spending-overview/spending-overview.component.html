@@ -13,7 +13,7 @@
     <app-spendings [spendings]="filteredSpendings" (spendingsChange)="getSpendings()"></app-spendings>
   </div>
   <div>
-    <button (click)="openDialog()">New Spending</button>
+    <button (click)="newSpending()">New Spending</button>
   </div>
   <div>
     <app-summary [spendings]="spendings" [startDate]="startDate" [endDate]="endDate"></app-summary>

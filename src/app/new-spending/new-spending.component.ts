@@ -1,4 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { EOperation, ESpendingType, IDialogProps, ISpending } from '../data.module';
 
@@ -10,7 +11,7 @@ import { EOperation, ESpendingType, IDialogProps, ISpending } from '../data.modu
 export class NewSpendingComponent implements OnInit {
 
   currentSpending: ISpending;
-  selectedDate;
+  selectedDate: FormControl;
   dialogTitle: string;
   amount: number;
   description: string;
@@ -25,13 +26,15 @@ export class NewSpendingComponent implements OnInit {
     // Parameter received
     if (this.data) {
       if (this.data.operation === EOperation.NEW) {
-        this.currentSpending = this.initNewSpending();
         this.dialogTitle = 'New Spending';
-        this.selectedDate = new Date();
+        this.currentSpending = this.initNewSpending();
+        this.selectedDate = new FormControl(new Date());
       } else {
-        this.currentSpending = this.data.spending;
         this.dialogTitle = 'Edit Spending';
-        this.selectedDate = this.currentSpending.date;
+        this.currentSpending = this.data.spending;
+        this.selectedDate = new FormControl(this.currentSpending.date);
+        this.amount = this.currentSpending.amount;
+        this.description = this.currentSpending.description;
       }
     }
   }
@@ -39,13 +42,14 @@ export class NewSpendingComponent implements OnInit {
   onSave(): void {
     // Valid Result
     if (this.selectedDate && this.amount && this.description) {
-      this.currentSpending.date = this.selectedDate;
+      this.currentSpending.date = this.selectedDate.value;
       this.currentSpending.amount = this.amount;
       this.currentSpending.description = this.description;
       this.success = 'success';
       this.error = '';
+      console.log('new / updated', this.currentSpending);
       setTimeout(() => {
-        this.dialogRef.close(this.currentSpending);
+          this.dialogRef.close(this.currentSpending);
         }, 1000,
       );
     } else {

@@ -1,18 +1,21 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {ISpending} from '../data.module';
-import {SpendingService} from '../spending.service';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { EOperation, IDialogProps, ISpending } from '../data.module';
+import { NewSpendingComponent } from '../new-spending/new-spending.component';
+import { SpendingService } from '../spending.service';
 
 @Component({
   selector: 'app-spendings',
   templateUrl: './spendings.component.html',
-  styleUrls: ['./spendings.component.css']
+  styleUrls: ['./spendings.component.css'],
 })
 export class SpendingsComponent implements OnInit {
 
   @Input() spendings: ISpending[];
   @Output() spendingsChange = new EventEmitter<any>();
 
-  constructor(private spendingService: SpendingService) { }
+  constructor(private spendingService: SpendingService, public dialog: MatDialog) {
+  }
 
   ngOnInit(): void {
   }
@@ -22,7 +25,16 @@ export class SpendingsComponent implements OnInit {
   }
 
   editSpending(spending: ISpending) {
-    this.spendingService.updateSpending(spending).subscribe(() => this.spendingsChange.emit());
+    const spendingProps: IDialogProps = { spending, operation: EOperation.UPDATE};
+    const dialogRef = this.dialog.open(NewSpendingComponent, {
+      data: spendingProps,
+      height: '400px',
+      width: '400px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.spendingService.updateSpending(result).subscribe(() => this.spendingsChange.emit());
+    });
   }
 
 }
