@@ -1,0 +1,8 @@
+<div *ngIf="spendings">
+  <div *ngFor="let spending of spendings">
+    <span>{{spending.description}} / {{spending.amount}} CHF
+    <button (click)="editSpending(spending)">edit</button>
+    <button (click)="deleteSpending(spending)">X</button>
+    </span>
+  </div>
+</div>

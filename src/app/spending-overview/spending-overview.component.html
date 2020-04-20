@@ -1,0 +1,18 @@
+<div>
+  <div class="spendingNav">
+    <button (click)="back()"><</button>
+    <div class="buttonGroup">
+      <button (click)="setTimeUnit(TimeUnitEnum.WEEK)">Week</button>
+      <button (click)="setTimeUnit(TimeUnitEnum.MONTH)">Month</button>
+      <button (click)="setTimeUnit(TimeUnitEnum.YEAR)">Year</button>
+    </div>
+    <button (click)="forward()">></button>
+  </div>
+  <div>showing Results from {{this.startDate | date:'dd/MM/yyyy'}} to {{this.endDate | date:'dd/MM/yyyy'}}</div>
+  <div>
+    <app-spendings [spendings]="filteredSpendings" (spendingsChange)="getSpendings()"></app-spendings>
+  </div>
+  <div>
+    <app-summary [spendings]="spendings" [startDate]="startDate" [endDate]="endDate"></app-summary>
+  </div>
+</div>
