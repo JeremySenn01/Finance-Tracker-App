@@ -10,12 +10,12 @@
   </div>
   <div>showing Results from {{this.startDate | date:'dd/MM/yyyy'}} to {{this.endDate | date:'dd/MM/yyyy'}}</div>
   <div>
-    <app-spendings [spendings]="filteredSpendings" (spendingsChange)="getSpendings()"></app-spendings>
+    <app-spendings *ngIf="filteredSpendings" [spendings]="filteredSpendings" (spendingsChange)="getSpendings()"></app-spendings>
   </div>
   <div>
     <button (click)="newSpending()">New Spending</button>
   </div>
   <div>
-    <app-summary [spendings]="spendings" [startDate]="startDate" [endDate]="endDate"></app-summary>
+    <app-summary *ngIf="spendings" [spendings]="spendings" [startDate]="startDate" [endDate]="endDate"></app-summary>
   </div>
 </div>

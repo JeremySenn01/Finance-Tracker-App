@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { EOperation, IDialogProps, ISpending } from '../data.module';
 import { NewSpendingComponent } from '../new-spending/new-spending.component';
-import { SpendingService } from '../spending.service';
+import { SpendingService } from '../Service/spending.service';
 
 @Component({
   selector: 'app-spendings',

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -9,7 +10,9 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { LoginComponent } from './login/login.component';
 import { NewSpendingComponent } from './new-spending/new-spending.component';
 import { SpendingOverviewComponent } from './spending-overview/spending-overview.component';
 import { SpendingsComponent } from './spendings/spendings.component';
@@ -22,9 +25,11 @@ import { SummaryComponent } from './summary/summary.component';
     NewSpendingComponent,
     SummaryComponent,
     SpendingOverviewComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     BrowserAnimationsModule,
     MatDialogModule,
     FormsModule,
@@ -34,6 +39,7 @@ import { SummaryComponent } from './summary/summary.component';
     MatDatepickerModule,
     MatNativeDateModule,
     ReactiveFormsModule,
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

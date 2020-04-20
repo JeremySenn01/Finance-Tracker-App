@@ -17,6 +17,16 @@ export interface IDialogProps {
   operation: EOperation;
 }
 
+export interface IUserCredentials {
+  email: string;
+  password: string;
+}
+
+export interface ILoginResponse {
+  value: string;
+  userId: number;
+}
+
 export enum ESpendingType {
   SINGLE,
   SERIES,

@@ -1,0 +1,17 @@
+<div>
+  <div>
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input matInput placeholder="Email" [(ngModel)]="email" type="email">
+    </mat-form-field>
+    <div>
+    </div>
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input matInput type="password" [(ngModel)]="password" placeholder="Password">
+    </mat-form-field>
+  </div>
+  <h4 class="login-error" *ngIf="error">{{error}}</h4>
+  <button mat-button cdkFocusInitial (click)="login()">Log in</button>
+  <button mat-button (click)="register()">Register</button>
+</div>

@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import * as moment from 'moment';
 import { EOperation, ETimeUnit, IDialogProps, ISpending } from '../data.module';
 import { NewSpendingComponent } from '../new-spending/new-spending.component';
-import { SpendingService } from '../spending.service';
+import { LoginService } from '../Service/login.service';
+import { SpendingService } from '../Service/spending.service';
 
 @Component({
   selector: 'app-spending-overview',
@@ -22,16 +24,23 @@ export class SpendingOverviewComponent implements OnInit {
   startDate: any;
   endDate: any;
 
-  constructor(private spendingService: SpendingService, public dialog: MatDialog) {
+  constructor(private spendingService: SpendingService,
+              private loginService: LoginService,
+              public dialog: MatDialog,
+              private router: Router) {
   }
 
   ngOnInit(): void {
+    if (!this.loginService.loggedInUser) {
+      this.router.navigate(['login']);
+    }
     this.setCurrentDate();
     this.getSpendings();
   }
 
   getSpendings(): void {
     this.spendingService.getSpendings().subscribe(spendings => {
+      console.log('loaded: ', spendings);
       this.spendings = spendings;
       this.filterSpendings();
     });
@@ -58,6 +67,7 @@ export class SpendingOverviewComponent implements OnInit {
 
   filterSpendings(): void {
     this.filteredSpendings = this.spendings.filter(s => moment(s.date).isBetween(this.startDate, this.endDate, 'day', '[]'));
+    console.log('filtered: ', moment(new Date().getMilliseconds()), this.startDate);
   }
 
   forward() {
