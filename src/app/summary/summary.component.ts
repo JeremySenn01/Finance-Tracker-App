@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import * as moment from 'moment';
 import { ISpending } from '../data.module';
 
@@ -7,11 +7,9 @@ import { ISpending } from '../data.module';
   templateUrl: './summary.component.html',
   styleUrls: ['./summary.component.css'],
 })
-export class SummaryComponent implements OnInit {
+export class SummaryComponent implements OnInit, OnChanges {
 
   @Input() spendings: ISpending[] = [];
-  @Input() startDate: any;
-  @Input() endDate: any;
 
   spendingsCurrentWeek: number;
   spendingsCurrentMonth: number;
@@ -24,6 +22,10 @@ export class SummaryComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.calculateValues();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
     this.calculateValues();
   }
 

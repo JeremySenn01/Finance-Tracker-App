@@ -26,14 +26,13 @@ export class SpendingService {
     );
   }
 
-  addSpending(spending: ISpending): Observable<ISpending> {
+  addSpending(spending: ISpending): Observable<HttpResponse<ISpending>> {
     const url = this.spendingsUrl;
     const token = this.loginService.getToken();
     const options = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json', Authorization: token.value}),
     };
-    return this.http.post<ISpending>(url, spending, options);
-
+    return this.http.post<ISpending>(url, spending, { observe: 'response', headers: options.headers});
   }
 
   removeSpending(spending: ISpending): Observable<HttpResponse<number>> {
@@ -45,12 +44,12 @@ export class SpendingService {
     return this.http.delete<HttpResponse<number>>(url, options);
   }
 
-  updateSpending(spending: ISpending): Observable<ISpending> {
+  updateSpending(spending: ISpending): Observable<HttpResponse<ISpending>> {
     const url = this.spendingsUrl;
     const token = this.loginService.getToken();
     const options = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json', Authorization: token.value}),
     };
-    return this.http.put<ISpending>(url, spending, options);
+    return this.http.put<ISpending>(url, spending, { observe: 'response', headers: options.headers});
   }
 }

@@ -47,9 +47,9 @@ export class SpendingOverviewComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.spendingService.addSpending(result).subscribe((response) => {
+      if (result) {
         this.getSpendings();
-      });
+      }
     });
   }
 

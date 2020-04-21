@@ -42,3 +42,8 @@ export enum EOperation {
   NEW,
   UPDATE,
 }
+
+export enum EEntryType {
+  SPENDING,
+  INCOME,
+}
