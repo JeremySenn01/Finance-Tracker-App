@@ -35,7 +35,6 @@ export class SpendingOverviewComponent implements OnInit {
 
   getSpendings(): void {
     this.spendingService.getSpendings().subscribe(spendings => {
-      console.log('loaded: ', spendings);
       this.spendings = spendings;
       this.filterSpendings();
     });
@@ -62,7 +61,6 @@ export class SpendingOverviewComponent implements OnInit {
 
   filterSpendings(): void {
     this.filteredSpendings = this.spendings.filter(s => moment(s.date).isBetween(this.startDate, this.endDate, 'day', '[]'));
-    console.log('filtered: ', moment(new Date().getMilliseconds()), this.startDate);
   }
 
   forward() {

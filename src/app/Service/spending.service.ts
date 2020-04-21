@@ -17,16 +17,12 @@ export class SpendingService {
   }
 
   getSpendings(): Observable<ISpending[]> {
-    const loggedInUser: ILoginResponse = this.loginService.getLoggedInUser();
-    if (loggedInUser) {
-      const url = `${this.spendingsUrl}/?userId=${loggedInUser.userId}`;
-      return this.http.get<ISpending[]>(url, {
-          headers: new HttpHeaders({ 'Content-Type': 'application/json', Authorization: loggedInUser.value}),
-        },
-      );
-    }
-    console.log('authToken not around boi');
-    return of([]);
+    const currentUserToken: ILoginResponse = this.loginService.getToken();
+    const url = `${this.spendingsUrl}/?userId=${currentUserToken.userId}`;
+    return this.http.get<ISpending[]>(url, {
+        headers: new HttpHeaders({ 'Content-Type': 'application/json', Authorization: currentUserToken.value}),
+      },
+    );
   }
 
   addSpending(spending: ISpending): Observable<ISpending> {

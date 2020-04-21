@@ -7,7 +7,6 @@ import { ILoginResponse, IUserCredentials } from '../data.module';
 })
 export class LoginService {
 
-  loggedInUser: ILoginResponse;
   private loginUrl = 'http://localhost:8080/login';
 
   httpOptions = {
@@ -23,12 +22,10 @@ export class LoginService {
 
   login(email: string, password: string): Promise<ILoginResponse> {
     const credentials: IUserCredentials = { email, password};
-    console.log(credentials);
 
     return new Promise<ILoginResponse>((resolve, reject) => {
       this.http.post<ILoginResponse>(this.loginUrl, credentials, this.httpOptions)
         .subscribe((response) => {
-          this.loggedInUser = { value: response.value, userId: response.userId};
           resolve(response);
         }, (error) => {
           reject(error);
@@ -36,8 +33,20 @@ export class LoginService {
     });
   }
 
-  getLoggedInUser(): ILoginResponse {
-    return this.loggedInUser;
+  isAuthenticated(): boolean {
+    const token = localStorage.getItem('token');
+    return !!token;
+  }
+
+  getToken(): ILoginResponse {
+    const token = localStorage.getItem('token');
+    const userId = +localStorage.getItem('userId');
+    return { userId, value: token};
+  }
+
+  setToken(info: ILoginResponse) {
+    localStorage.setItem('token', info.value);
+    localStorage.setItem('userId', info.userId.toString());
   }
 
   logout(): void {
