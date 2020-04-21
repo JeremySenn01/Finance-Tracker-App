@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit {
 
   login(): void {
     this.loginService.login(this.email, this.password).then((response: ILoginResponse) => {
+      this.loginService.setToken(response);
       this.router.navigate(['spendings']);
     }).catch(() => this.error = 'Username or Password incorrect');
   }

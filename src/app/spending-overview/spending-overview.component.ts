@@ -25,22 +25,16 @@ export class SpendingOverviewComponent implements OnInit {
   endDate: any;
 
   constructor(private spendingService: SpendingService,
-              private loginService: LoginService,
-              public dialog: MatDialog,
-              private router: Router) {
+              public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
-    if (!this.loginService.loggedInUser) {
-      this.router.navigate(['login']);
-    }
     this.setCurrentDate();
     this.getSpendings();
   }
 
   getSpendings(): void {
     this.spendingService.getSpendings().subscribe(spendings => {
-      console.log('loaded: ', spendings);
       this.spendings = spendings;
       this.filterSpendings();
     });
@@ -67,7 +61,6 @@ export class SpendingOverviewComponent implements OnInit {
 
   filterSpendings(): void {
     this.filteredSpendings = this.spendings.filter(s => moment(s.date).isBetween(this.startDate, this.endDate, 'day', '[]'));
-    console.log('filtered: ', moment(new Date().getMilliseconds()), this.startDate);
   }
 
   forward() {

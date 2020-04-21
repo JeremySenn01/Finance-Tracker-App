@@ -47,7 +47,6 @@ export class NewSpendingComponent implements OnInit {
       this.currentSpending.description = this.description;
       this.success = 'success';
       this.error = '';
-      console.log('new / updated', this.currentSpending);
       setTimeout(() => {
           this.dialogRef.close(this.currentSpending);
         }, 1000,
