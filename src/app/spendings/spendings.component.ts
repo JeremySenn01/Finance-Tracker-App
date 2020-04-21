@@ -32,7 +32,7 @@ export class SpendingsComponent implements OnInit {
       width: '400px',
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       this.spendingService.updateSpending(result).subscribe(() => this.spendingsChange.emit());
     });
   }

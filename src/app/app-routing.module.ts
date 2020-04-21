@@ -12,6 +12,7 @@ const routes: Routes = [
     canActivate: [AuthGuardService],
   },
   { path: 'login', component: LoginComponent},
+  { path: '**', redirectTo: 'spendings', pathMatch: 'full'},
 ];
 
 @NgModule({

@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 import * as moment from 'moment';
 import { EOperation, ETimeUnit, IDialogProps, ISpending } from '../data.module';
 import { NewSpendingComponent } from '../new-spending/new-spending.component';
-import { LoginService } from '../Service/login.service';
 import { SpendingService } from '../Service/spending.service';
 
 @Component({
@@ -49,7 +47,9 @@ export class SpendingOverviewComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.spendingService.addSpending(result);
+      this.spendingService.addSpending(result).subscribe((response) => {
+        this.getSpendings();
+      });
     });
   }
 

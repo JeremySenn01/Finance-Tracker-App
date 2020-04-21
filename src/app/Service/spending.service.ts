@@ -1,6 +1,6 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ILoginResponse, ISpending } from '../data.module';
 import { SPENDINGS } from '../mock-spendings';
 import { LoginService } from './login.service';
@@ -16,6 +16,7 @@ export class SpendingService {
   constructor(private http: HttpClient, private loginService: LoginService) {
   }
 
+
   getSpendings(): Observable<ISpending[]> {
     const currentUserToken: ILoginResponse = this.loginService.getToken();
     const url = `${this.spendingsUrl}/?userId=${currentUserToken.userId}`;
@@ -26,19 +27,30 @@ export class SpendingService {
   }
 
   addSpending(spending: ISpending): Observable<ISpending> {
-    this.spendings.push(spending);
-    return of(spending);
+    const url = this.spendingsUrl;
+    const token = this.loginService.getToken();
+    const options = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json', Authorization: token.value}),
+    };
+    return this.http.post<ISpending>(url, spending, options);
+
   }
 
-  removeSpending(spending: ISpending): Observable<ISpending> {
-    const index = this.spendings.indexOf(spending);
-    this.spendings.splice(index, 1);
-    return of(spending);
+  removeSpending(spending: ISpending): Observable<HttpResponse<number>> {
+    const url = `${this.spendingsUrl}/${spending.id}`;
+    const token = this.loginService.getToken();
+    const options = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json', Authorization: token.value}),
+    };
+    return this.http.delete<HttpResponse<number>>(url, options);
   }
 
   updateSpending(spending: ISpending): Observable<ISpending> {
-    const index = this.spendings.findIndex(s => s.id === spending.id);
-    this.spendings[index] = spending;
-    return of(spending);
+    const url = this.spendingsUrl;
+    const token = this.loginService.getToken();
+    const options = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json', Authorization: token.value}),
+    };
+    return this.http.put<ISpending>(url, spending, options);
   }
 }
