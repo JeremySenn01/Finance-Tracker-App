@@ -25,15 +25,10 @@ export class SpendingOverviewComponent implements OnInit {
   endDate: any;
 
   constructor(private spendingService: SpendingService,
-              private loginService: LoginService,
-              public dialog: MatDialog,
-              private router: Router) {
+              public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
-    if (!this.loginService.loggedInUser) {
-      this.router.navigate(['login']);
-    }
     this.setCurrentDate();
     this.getSpendings();
   }

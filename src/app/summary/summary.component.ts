@@ -9,7 +9,7 @@ import { ISpending } from '../data.module';
 })
 export class SummaryComponent implements OnInit {
 
-  @Input() spendings: ISpending[];
+  @Input() spendings: ISpending[] = [];
   @Input() startDate: any;
   @Input() endDate: any;
 
