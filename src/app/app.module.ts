@@ -30,8 +30,7 @@ import { SummaryComponent } from './summary/summary.component';
     LoginComponent,
   ],
   imports: [
-    FlexLayoutModule,
-    BrowserModule,
+    FlexLayoutModule,BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
     MatDialogModule,
