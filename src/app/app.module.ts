@@ -16,6 +16,7 @@ import { NewSpendingComponent } from './new-spending/new-spending.component';
 import { SpendingOverviewComponent } from './spending-overview/spending-overview.component';
 import { SpendingsComponent } from './spendings/spendings.component';
 import { SummaryComponent } from './summary/summary.component';
+import {MatRadioModule} from "@angular/material/radio";
 
 @NgModule({
   declarations: [
@@ -26,21 +27,22 @@ import { SummaryComponent } from './summary/summary.component';
     SpendingOverviewComponent,
     LoginComponent,
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    MatDialogModule,
-    FormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatFormFieldModule,
-    ReactiveFormsModule,
-    AppRoutingModule,
-  ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        MatDialogModule,
+        FormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatFormFieldModule,
+        ReactiveFormsModule,
+        AppRoutingModule,
+        MatRadioModule,
+    ],
   providers: [],
   bootstrap: [AppComponent],
 })

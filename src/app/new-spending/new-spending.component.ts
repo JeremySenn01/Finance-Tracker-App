@@ -1,7 +1,9 @@
+import { HttpResponse } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { EOperation, ESpendingType, IDialogProps, ISpending } from '../data.module';
+import { EEntryType, EOperation, ESpendingType, IDialogProps, ISpending } from '../data.module';
+import { SpendingService } from '../Service/spending.service';
 
 @Component({
   selector: 'app-new-spending',
@@ -17,9 +19,14 @@ export class NewSpendingComponent implements OnInit {
   description: string;
   error: string;
   success: string;
+  disableCloseDialog: boolean;
+  entryType: EEntryType;
+  EntryTypeEnum = EEntryType;
 
   constructor(public dialogRef: MatDialogRef<NewSpendingComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: IDialogProps) {
+              @Inject(MAT_DIALOG_DATA) public data: IDialogProps,
+              private spendingService: SpendingService,
+  ) {
   }
 
   ngOnInit(): void {
@@ -37,6 +44,11 @@ export class NewSpendingComponent implements OnInit {
         this.description = this.currentSpending.description;
       }
     }
+    this.entryType = EEntryType.SPENDING;
+  }
+
+  onEntryTypeChange(type: EEntryType): void {
+    this.entryType = type;
   }
 
   onSave(): void {
@@ -45,14 +57,41 @@ export class NewSpendingComponent implements OnInit {
       this.currentSpending.date = this.selectedDate.value;
       this.currentSpending.amount = this.amount;
       this.currentSpending.description = this.description;
+      this.disableCloseDialog = true;
+      this.dialogRef.disableClose = true;
+
+      // Attempt to save Spending
+      this.saveToBackend();
+    } else {
+      this.error = 'Please provide all Inputs with valid data';
+    }
+  }
+
+  saveToBackend() {
+    if (this.data.operation === EOperation.NEW) {
+      this.spendingService.addSpending(this.currentSpending).subscribe((response) => {
+        this.handleResponse(response);
+      });
+    } else {
+      this.spendingService.updateSpending(this.currentSpending).subscribe((response) => {
+        this.handleResponse(response);
+      });
+    }
+  }
+
+  handleResponse(response: HttpResponse<ISpending>): void {
+    if (response.status === 200) {
       this.success = 'success';
       this.error = '';
       setTimeout(() => {
-          this.dialogRef.close(this.currentSpending);
-        }, 1000,
-      );
+        this.disableCloseDialog = false;
+        this.dialogRef.disableClose = false;
+        this.dialogRef.close(this.currentSpending);
+      }, 1000);
     } else {
-      this.error = 'Please provide all Inputs with valid data';
+      this.error = 'Couldn\'t save changes';
+      this.disableCloseDialog = false;
+      this.dialogRef.disableClose = false;
     }
   }
 
