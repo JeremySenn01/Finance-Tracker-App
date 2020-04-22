@@ -15,8 +15,8 @@
     </mat-form-field>
     <h4 class="login-error" *ngIf="getError('password')?.required">Password is required</h4>
     <div fxLayout="row" fxLayoutAlign="center center">
-      <button mat-button (click)="login()">Log in</button>
-      <button mat-button (click)="register()">Register</button>
+      <button mat-button (click)="authenticate()">Log in</button>
+      <button mat-button (click)="authenticate(true)">Register</button>
     </div>
     <h4 class="login-error" *ngIf="error">{{error}}</h4>
   </div>

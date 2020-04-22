@@ -26,20 +26,19 @@ export class LoginComponent implements OnInit {
     return this.loginForm.controls[field].touched && this.loginForm.controls[field].errors;
   }
 
-  login(): void {
+  authenticate(register: boolean = false): void {
     if (this.loginForm.valid) {
       const email = this.loginForm.controls.email.value;
       const password = this.loginForm.controls.password.value;
-      this.loginService.login(email, password).then((token: string) => {
-        this.loginService.setToken(token);
-        this.router.navigate(['spendings']);
-      }).catch(() => this.error = 'Username or Password incorrect');
+      this.loginService.authenticate(email, password, register)
+        .then((token: string) => {
+          this.loginService.setToken(token);
+          this.router.navigate(['spendings']).then();
+        }).catch(() => this.error = register ?
+        `User with this email already exists` :
+        'Username or Password incorrect');
     } else {
       this.error = 'Please validate the input';
     }
-  }
-
-  register(): void {
-    // TODO: implement method
   }
 }
