@@ -7,8 +7,10 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatRadioModule } from '@angular/material/radio';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { JwtModule } from '@auth0/angular-jwt';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -16,7 +18,6 @@ import { NewSpendingComponent } from './new-spending/new-spending.component';
 import { SpendingOverviewComponent } from './spending-overview/spending-overview.component';
 import { SpendingsComponent } from './spendings/spendings.component';
 import { SummaryComponent } from './summary/summary.component';
-import {MatRadioModule} from "@angular/material/radio";
 
 @NgModule({
   declarations: [
@@ -27,22 +28,28 @@ import {MatRadioModule} from "@angular/material/radio";
     SpendingOverviewComponent,
     LoginComponent,
   ],
-    imports: [
-        BrowserModule,
-        HttpClientModule,
-        BrowserAnimationsModule,
-        MatDialogModule,
-        FormsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatButtonModule,
-        MatDatepickerModule,
-        MatNativeDateModule,
-        MatFormFieldModule,
-        ReactiveFormsModule,
-        AppRoutingModule,
-        MatRadioModule,
-    ],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatDialogModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    AppRoutingModule,
+    MatRadioModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => localStorage.getItem('token'),
+        whitelistedDomains: ['localhost:4200'],
+      },
+    }),
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

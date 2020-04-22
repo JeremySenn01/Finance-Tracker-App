@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ILoginResponse } from '../data.module';
 import { LoginService } from '../Service/login.service';
 
 @Component({
@@ -21,8 +20,8 @@ export class LoginComponent implements OnInit {
   }
 
   login(): void {
-    this.loginService.login(this.email, this.password).then((response: ILoginResponse) => {
-      this.loginService.setToken(response);
+    this.loginService.login(this.email, this.password).then((token: string) => {
+      this.loginService.setToken(token);
       this.router.navigate(['spendings']);
     }).catch(() => this.error = 'Username or Password incorrect');
   }
