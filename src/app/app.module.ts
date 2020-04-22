@@ -1,5 +1,6 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -29,6 +30,7 @@ import { SummaryComponent } from './summary/summary.component';
     LoginComponent,
   ],
   imports: [
+    FlexLayoutModule,
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
@@ -43,7 +45,7 @@ import { SummaryComponent } from './summary/summary.component';
     ReactiveFormsModule,
     AppRoutingModule,
     MatRadioModule,
-    JwtModule.forRoot({
+  JwtModule.forRoot({
       config: {
         tokenGetter: () => localStorage.getItem('token'),
         whitelistedDomains: ['localhost:4200'],
