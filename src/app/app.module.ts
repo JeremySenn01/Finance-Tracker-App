@@ -11,6 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { JwtModule } from '@auth0/angular-jwt';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -29,8 +30,7 @@ import { SummaryComponent } from './summary/summary.component';
     LoginComponent,
   ],
   imports: [
-    FlexLayoutModule,
-    BrowserModule,
+    FlexLayoutModule,BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
     MatDialogModule,
@@ -44,6 +44,12 @@ import { SummaryComponent } from './summary/summary.component';
     ReactiveFormsModule,
     AppRoutingModule,
     MatRadioModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => localStorage.getItem('token'),
+        whitelistedDomains: ['localhost:4200'],
+      },
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent],

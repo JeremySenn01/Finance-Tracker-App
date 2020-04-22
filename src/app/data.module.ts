@@ -22,11 +22,6 @@ export interface IUserCredentials {
   password: string;
 }
 
-export interface ILoginResponse {
-  value: string;
-  userId: number;
-}
-
 export enum ESpendingType {
   SINGLE,
   SERIES,

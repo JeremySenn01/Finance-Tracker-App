@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ILoginResponse } from '../data.module';
 import { LoginService } from '../Service/login.service';
 
 @Component({
@@ -31,8 +30,8 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       const email = this.loginForm.controls.email.value;
       const password = this.loginForm.controls.password.value;
-      this.loginService.login(email, password).then((response: ILoginResponse) => {
-        this.loginService.setToken(response);
+      this.loginService.login(email, password).then((token: string) => {
+        this.loginService.setToken(token);
         this.router.navigate(['spendings']);
       }).catch(() => this.error = 'Username or Password incorrect');
     } else {

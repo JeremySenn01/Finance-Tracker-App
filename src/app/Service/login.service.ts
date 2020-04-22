@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ILoginResponse, IUserCredentials } from '../data.module';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { IUserCredentials } from '../data.module';
 
 @Injectable({
   providedIn: 'root',
@@ -13,20 +14,20 @@ export class LoginService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json'}),
   };
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, public jwtHelper: JwtHelperService) {
   }
 
   register(email: string, password: string): void {
     // TODO: implement register method
   }
 
-  login(email: string, password: string): Promise<ILoginResponse> {
+  login(email: string, password: string): Promise<string> {
     const credentials: IUserCredentials = { email, password};
 
-    return new Promise<ILoginResponse>((resolve, reject) => {
-      this.http.post<ILoginResponse>(this.loginUrl, credentials, this.httpOptions)
+    return new Promise<string>((resolve, reject) => {
+      this.http.post<{ value: string }>(this.loginUrl, credentials, this.httpOptions)
         .subscribe((response) => {
-          resolve(response);
+          resolve(response.value);
         }, (error) => {
           reject(error);
         });
@@ -35,18 +36,15 @@ export class LoginService {
 
   isAuthenticated(): boolean {
     const token = localStorage.getItem('token');
-    return !!token;
+    return !this.jwtHelper.isTokenExpired(token);
   }
 
-  getToken(): ILoginResponse {
-    const token = localStorage.getItem('token');
-    const userId = +localStorage.getItem('userId');
-    return { userId, value: token};
+  getToken(): string {
+    return localStorage.getItem('token');
   }
 
-  setToken(info: ILoginResponse) {
-    localStorage.setItem('token', info.value);
-    localStorage.setItem('userId', info.userId.toString());
+  setToken(token: string) {
+    localStorage.setItem('token', token);
   }
 
   logout(): void {
