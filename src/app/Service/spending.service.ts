@@ -16,7 +16,6 @@ export class SpendingService {
   constructor(private http: HttpClient, private loginService: LoginService) {
   }
 
-
   getSpendings(): Observable<ISpending[]> {
     const token: string = this.loginService.getToken();
     return this.http.get<ISpending[]>(this.spendingsUrl, {

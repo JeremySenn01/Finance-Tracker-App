@@ -31,7 +31,6 @@ export class SummaryComponent implements OnInit, OnChanges {
 
   clearValues(): void {
     this.spendingsTotal = 0;
-    this.spendingsCurrentWeek = 0;
     this.spendingsPast = 0;
     this.spendingsFuture = 0;
     this.spendingsCurrentYear = 0;
@@ -42,19 +41,18 @@ export class SummaryComponent implements OnInit, OnChanges {
   calculateValues(): void {
     this.clearValues();
     this.spendings.forEach(spending => {
-      if (moment(spending.date).isBetween(moment().startOf('week'), moment().endOf('week'), 'day', '[]')) {
+      if (moment(spending.date).isBetween(moment().startOf('week'), moment().endOf('week'), 'h', '[]')) {
         this.spendingsCurrentWeek += spending.amount;
       }
-      if (moment(spending.date).isBetween(moment().startOf('month'), moment().endOf('month'), 'day', '[]')) {
+      if (moment(spending.date).isBetween(moment().startOf('month'), moment().endOf('month'), 'h', '[]')) {
         this.spendingsCurrentMonth += spending.amount;
       }
-      if (moment(spending.date).isBetween(moment().startOf('year'), moment().endOf('year'), 'day', '[]')) {
+      if (moment(spending.date).isBetween(moment().startOf('year'), moment().endOf('year'), 'h', '[]')) {
         this.spendingsCurrentYear += spending.amount;
       }
-      if (moment(spending.date).isAfter(moment(), 'day')) {
+      if (moment(spending.date).isAfter(moment(), 'h')) {
         this.spendingsFuture += spending.amount;
-      }
-      if (moment(spending.date).isBefore(moment())) {
+      } else if (moment(spending.date).isBefore(moment())) {
         this.spendingsPast += spending.amount;
       }
       this.spendingsTotal += spending.amount;

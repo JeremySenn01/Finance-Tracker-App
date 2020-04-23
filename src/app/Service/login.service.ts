@@ -1,6 +1,7 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { Observable } from 'rxjs';
 import { IUserCredentials } from '../data.module';
 
 @Injectable({
@@ -18,7 +19,7 @@ export class LoginService {
   }
 
   authenticate(email: string, password: string, register: boolean = false): Promise<string> {
-    const credentials: IUserCredentials = { email, password };
+    const credentials: IUserCredentials = { email, password};
 
     return new Promise<string>((resolve, reject) => {
       const action = register ?
@@ -26,10 +27,18 @@ export class LoginService {
         this.http.post<{ value: string }>(this.loginUrl, credentials, this.httpOptions);
 
       action.subscribe((response) => {
-          resolve(response.value);
-        }, (error) => {
-          reject(error);
-        });
+        resolve(response.value);
+      }, (error) => {
+        reject(error);
+      });
+    });
+  }
+
+  logout(): Observable<any> {
+    console.log('token: ', this.getToken());
+    return this.http.delete<any>(this.loginUrl, {
+      headers: new HttpHeaders({ Authorization: this.getToken()}),
+      observe: 'response',
     });
   }
 
@@ -46,7 +55,7 @@ export class LoginService {
     localStorage.setItem('token', token);
   }
 
-  logout(): void {
-
+  clearToken(): void {
+    localStorage.removeItem('token');
   }
 }
