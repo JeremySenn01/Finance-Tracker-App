@@ -1,8 +1,13 @@
-<div *ngIf="spendings">
-  <div *ngFor="let spending of spendings">
-    <span>{{spending.description}} / {{spending.amount}} CHF
-    <button (click)="editSpending(spending)">edit</button>
-    <button (click)="deleteSpending(spending)">X</button>
-    </span>
+<div *ngIf="spendings" class="list-group list-group-flush">
+  <div *ngFor="let spending of spendings" class="list-group-item" fxLayout="row" fxLayoutAlign="space-between center">
+    <div class="info" fxLayout="row">
+      <div><span>{{spending.description}}</span></div>
+      <div [ngClass]="{amount: true, positive: spending.amount >= 0}"><span>{{spending.amount}} CHF</span></div>
+      <div><span>{{spending.date | date:'dd/MM/yyyy'}}</span></div>
+    </div>
+    <div>
+      <img (click)="editSpending(spending)" [src]="Images.EDIT" alt="Edit"/>
+      <img (click)="deleteSpending(spending)" [src]="Images.DELETE" alt="Delete"/>
+    </div>
   </div>
 </div>

@@ -35,7 +35,6 @@ export class LoginService {
   }
 
   logout(): Observable<any> {
-    console.log('token: ', this.getToken());
     return this.http.delete<any>(this.loginUrl, {
       headers: new HttpHeaders({ Authorization: this.getToken()}),
       observe: 'response',

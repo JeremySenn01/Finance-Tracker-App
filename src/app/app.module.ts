@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -53,6 +54,7 @@ import { SummaryComponent } from './summary/summary.component';
         whitelistedDomains: ['localhost:4200'],
       },
     }),
+    MatButtonToggleModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

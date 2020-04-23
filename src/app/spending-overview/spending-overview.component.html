@@ -1,23 +1,44 @@
 <div>
-  <button (click)="logout()">Logout</button>
-  <div class="spendingNav">
-    <button (click)="back()"><</button>
-    <div class="buttonGroup">
-      <button (click)="setTimeUnit(TimeUnitEnum.WEEK)">Week</button>
-      <button (click)="setTimeUnit(TimeUnitEnum.MONTH)">Month</button>
-      <button (click)="setTimeUnit(TimeUnitEnum.YEAR)">Year</button>
+  <div class="header" fxLayout="row" fxLayoutAlign="space-between center">
+    <h1>Finance Tracker</h1>
+    <div (click)="logout()">Logout</div>
+  </div>
+
+  <div class="content" fxLayout="column" fxLayoutAlign="start center">
+    <div class="content-header" fxLayout="row" fxLayoutAlign="start end" fxFill>
+      <div fxLayout="row" class="spendingNav" fxFlex="70">
+        <button mat-button (click)="back()"><</button>
+        <mat-button-toggle-group>
+          <mat-button-toggle [checked]="timeUnit === TimeUnitEnum.WEEK"
+                             (click)="setTimeUnit(TimeUnitEnum.WEEK)" value="Week">Week</mat-button-toggle>
+          <mat-button-toggle [checked]="timeUnit === TimeUnitEnum.MONTH"
+                             (click)="setTimeUnit(TimeUnitEnum.MONTH)" value="Month">Month</mat-button-toggle>
+          <mat-button-toggle [checked]="timeUnit === TimeUnitEnum.YEAR"
+                             (click)="setTimeUnit(TimeUnitEnum.YEAR)" value="Year">Year</mat-button-toggle>
+        </mat-button-toggle-group>
+        <button mat-button (click)="forward()">></button>
+        <div fxLayout="row" fxLayoutAlign="center center">
+          <span>{{this.startDate | date:'dd/MM/yyyy'}}</span>
+          <p>-</p>
+          <span>{{this.endDate | date:'dd/MM/yyyy'}}</span>
+        </div>
+      </div>
+      <div fxFlex="30">
+        <button mat-button class="new-spending" (click)="newSpending()">New Entry</button>
+      </div>
     </div>
-    <button (click)="forward()">></button>
-  </div>
-  <div>showing Results from {{this.startDate | date:'dd/MM/yyyy'}} to {{this.endDate | date:'dd/MM/yyyy'}}</div>
-  <div>
-    <app-spendings *ngIf="filteredSpendings" [spendings]="filteredSpendings"
-                   (spendingsChange)="getSpendings()"></app-spendings>
-  </div>
-  <div>
-    <button class="new-spending" (click)="newSpending()">New Spending</button>
-  </div>
-  <div>
-    <app-summary *ngIf="spendings" [spendings]="spendings"></app-summary>
+
+    <div fxLayout="row" fxLayoutAlign="start start" fxFill>
+      <div fxFlex="70">
+        <div *ngIf="filteredSpendings?.length === 0">
+          <h2>You have no entries for this period of time</h2>
+        </div>
+        <app-spendings *ngIf="filteredSpendings" [spendings]="filteredSpendings"
+                       (spendingsChange)="getSpendings()"></app-spendings>
+      </div>
+      <div fxFlex="30">
+        <app-summary *ngIf="spendings" [spendings]="spendings"></app-summary>
+      </div>
+    </div>
   </div>
 </div>

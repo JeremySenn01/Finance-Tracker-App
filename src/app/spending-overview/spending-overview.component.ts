@@ -59,13 +59,12 @@ export class SpendingOverviewComponent implements OnInit {
 
   logout(): void {
     this.loginService.logout().subscribe((response) => {
-      console.log('response: ', response);
       if (response) {
         this.router.navigate(['/login']).then(() => {
           this.loginService.clearToken();
         });
       } else {
-        console.log('failed to logout');
+        console.log('Failed to logout');
       }
     });
   }
@@ -127,5 +126,4 @@ export class SpendingOverviewComponent implements OnInit {
     this.selectedYear = +moment().format('Y');
     this.generateDate();
   }
-
 }
