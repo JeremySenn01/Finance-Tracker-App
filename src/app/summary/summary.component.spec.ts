@@ -8,9 +8,10 @@ describe('SummaryComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SummaryComponent ]
-    })
-    .compileComponents();
+      declarations: [
+        SummaryComponent,
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -23,3 +24,4 @@ describe('SummaryComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+

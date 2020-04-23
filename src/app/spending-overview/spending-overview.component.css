@@ -1,0 +1,59 @@
+.content {
+  width: 100vw;
+  padding: 5vh 20vw;
+}
+
+.header > h1 {
+  font-size: 24px;
+  margin: 0 40px;
+
+}
+
+.header > div {
+  margin: 0 40px;
+}
+
+.header:hover {
+  cursor: pointer;
+}
+
+.header {
+  height: 80px;
+  background-color: black;
+  color: white;
+  border-bottom: 2px solid lightgrey;
+  padding: 20px;
+}
+
+.content-header {
+  padding: 20px;
+  margin-bottom: 20px;
+  border-bottom: 2px solid lightgrey;
+}
+
+.spendingNav > div {
+  padding-left: 20px;
+}
+
+div[fxLayout="row"] > p {
+  margin: 10px;
+}
+
+app-spendings::ng-deep .list-group {
+  max-height: 60vh;
+  margin-right: 30px;
+}
+
+.new-spending {
+  background-color: black;
+  color: white;
+
+}
+
+.button-group {
+  height: 40px;
+  width: 75px;
+  background-color: lightgrey;
+  border: none;
+}
+

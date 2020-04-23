@@ -1,4 +1,7 @@
+import { HttpClientModule } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatDialog } from '@angular/material/dialog';
+import { SpendingService } from '../Service/spending.service';
 
 import { SpendingsComponent } from './spendings.component';
 
@@ -8,7 +11,16 @@ describe('SpendingsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SpendingsComponent ]
+      imports: [
+        HttpClientModule,
+      ],
+      declarations: [
+        SpendingsComponent,
+      ],
+      providers: [
+        SpendingService,
+        { provide: MatDialog, useValue: { }},
+      ],
     })
     .compileComponents();
   }));

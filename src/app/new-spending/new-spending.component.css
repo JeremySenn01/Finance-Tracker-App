@@ -1,0 +1,46 @@
+mat-form-field {
+  width: 100%;
+}
+
+.dialog-error,
+.dialog-success {
+  font-size: 15px;
+  margin-left: 16px;
+  margin-top: 7px;
+}
+
+.dialog-error {
+  color: red;
+}
+
+.dialog-success {
+  color: green;
+}
+
+.mat-slide-toggle {
+  margin-bottom: 10px
+}
+
+div[mat-dialog-actions] {
+  padding-top: 0;
+}
+
+div[fxLayout] {
+  margin-bottom: 5px;
+}
+
+div[fxLayout] > p {
+  margin: 0 5px 8px;
+}
+
+h3 {
+  margin: 0;
+}
+
+::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+  background-color: white;
+}
+
+::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+  background-color: rgba(0,0,0,.38);;
+}

@@ -1,0 +1,23 @@
+<div class="my-container" fxLayout="column" fxLayoutAlign="center center">
+  <div class="form-container" [formGroup]="loginForm">
+    <h1>Login</h1>
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input matInput placeholder="Email" formControlName="email" type="email">
+    </mat-form-field>
+    <h4 class="login-error" *ngIf="getError('email')?.required">Email is required</h4>
+    <h4 class="login-error" *ngIf="getError('email')?.email">Email is not valid</h4>
+    <div>
+    </div>
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input matInput type="password" formControlName="password" placeholder="Password">
+    </mat-form-field>
+    <h4 class="login-error" *ngIf="getError('password')?.required">Password is required</h4>
+    <div fxLayout="row" fxLayoutAlign="center center">
+      <button mat-button (click)="authenticate()">Log in</button>
+      <button mat-button (click)="authenticate(true)">Register</button>
+    </div>
+    <h4 class="login-error" *ngIf="error">{{error}}</h4>
+  </div>
+</div>

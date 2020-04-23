@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import * as moment from 'moment';
-import { ETimeUnit, ISpending } from '../data.module';
-import { SpendingService } from '../spending.service';
+import { EOperation, ETimeUnit, IDialogProps, ISpending } from '../data.module';
+import { NewSpendingComponent } from '../new-spending/new-spending.component';
+import { LoginService } from '../Service/login.service';
+import { SpendingService } from '../Service/spending.service';
 
 @Component({
   selector: 'app-spending-overview',
@@ -20,7 +24,10 @@ export class SpendingOverviewComponent implements OnInit {
   startDate: any;
   endDate: any;
 
-  constructor(private spendingService: SpendingService) {
+  constructor(private spendingService: SpendingService,
+              private loginService: LoginService,
+              private router: Router,
+              public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -32,6 +39,33 @@ export class SpendingOverviewComponent implements OnInit {
     this.spendingService.getSpendings().subscribe(spendings => {
       this.spendings = spendings;
       this.filterSpendings();
+    });
+  }
+
+  newSpending(): void {
+    const spendingProps: IDialogProps = { spending: null, operation: EOperation.NEW};
+    const dialogRef = this.dialog.open(NewSpendingComponent, {
+      data: spendingProps,
+      height: '400px',
+      width: '400px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.getSpendings();
+      }
+    });
+  }
+
+  logout(): void {
+    this.loginService.logout().subscribe((response) => {
+      if (response) {
+        this.router.navigate(['/login']).then(() => {
+          this.loginService.clearToken();
+        });
+      } else {
+        console.log('Failed to logout');
+      }
     });
   }
 
@@ -70,7 +104,6 @@ export class SpendingOverviewComponent implements OnInit {
   }
 
   generateDate(): void {
-
     let startDate;
     let endDate;
     if (this.timeUnit === ETimeUnit.WEEK) {
@@ -93,5 +126,4 @@ export class SpendingOverviewComponent implements OnInit {
     this.selectedYear = +moment().format('Y');
     this.generateDate();
   }
-
 }

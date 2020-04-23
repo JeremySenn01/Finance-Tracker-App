@@ -1,0 +1,33 @@
+img {
+  width: 15px;
+  margin-right: 6px;
+}
+
+img:hover {
+  cursor: pointer;
+  -ms-overflow-style: none;
+}
+
+.list-group {
+  overflow-y: scroll;
+}
+
+.list-group::-webkit-scrollbar {
+  display: none;
+}
+
+.info {
+  width: 80%;
+}
+
+.amount:not(.positive) {
+  color: red;
+}
+
+.amount.positive {
+  color: green;
+}
+
+.info > div{
+  width: 50%;
+}
