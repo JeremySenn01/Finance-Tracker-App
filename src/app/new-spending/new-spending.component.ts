@@ -1,8 +1,8 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { EEntryType, EOperation, ESpendingType, IDialogProps, ISpending } from '../data.module';
+import { EOperation, ESpendingType, IDialogProps, ISpending } from '../data.module';
 import { SpendingService } from '../Service/spending.service';
 
 @Component({
@@ -11,56 +11,48 @@ import { SpendingService } from '../Service/spending.service';
   styleUrls: ['./new-spending.component.css'],
 })
 export class NewSpendingComponent implements OnInit {
-
-  currentSpending: ISpending;
-  selectedDate: FormControl;
+  spending: ISpending;
   dialogTitle: string;
-  amount: number;
-  description: string;
   error: string;
   success: string;
   disableCloseDialog: boolean;
-  entryType: EEntryType;
-  EntryTypeEnum = EEntryType;
+  spendingForm: FormGroup;
 
   constructor(public dialogRef: MatDialogRef<NewSpendingComponent>,
               @Inject(MAT_DIALOG_DATA) public data: IDialogProps,
-              private spendingService: SpendingService,
-  ) {
+              private spendingService: SpendingService) {
   }
 
   ngOnInit(): void {
-    // Parameter received
-    if (this.data) {
-      if (this.data.operation === EOperation.NEW) {
-        this.dialogTitle = 'New Spending';
-        this.currentSpending = this.initNewSpending();
-        this.selectedDate = new FormControl(new Date());
-      } else {
-        this.dialogTitle = 'Edit Spending';
-        this.currentSpending = this.data.spending;
-        this.selectedDate = new FormControl(this.currentSpending.date);
-        this.amount = this.currentSpending.amount;
-        this.description = this.currentSpending.description;
-      }
-    }
-    this.entryType = EEntryType.SPENDING;
-  }
+    const isNewSpending = !(this.data && this.data.operation === EOperation.UPDATE);
+    const spending =  isNewSpending ?
+      this.initNewSpending() :
+      this.data.spending;
 
-  onEntryTypeChange(type: EEntryType): void {
-    this.entryType = type;
+    const description = spending.description;
+    const amount = spending.amount >= 0 ? spending.amount : -spending.amount;
+    const date = spending.date;
+    const isIncome = spending.amount > 0;
+    this.dialogTitle = isNewSpending ? 'New Spending' : 'Edit Spending';
+    this.spending = spending;
+
+    this.spendingForm = new FormGroup({
+      description: new FormControl(description, [Validators.required]),
+      amount: new FormControl(amount, [Validators.required]),
+      date: new  FormControl(date, [Validators.required]),
+      isIncome: new FormControl(isIncome, [Validators.required]),
+    });
   }
 
   onSave(): void {
-    // Valid Result
-    if (this.selectedDate && this.amount && this.description) {
-      this.currentSpending.date = this.selectedDate.value;
-      this.currentSpending.amount = this.amount;
-      this.currentSpending.description = this.description;
+    if (this.spendingForm.valid) {
+      const controls = this.spendingForm.controls;
+      this.spending.description = controls.description.value;
+      this.spending.date = controls.date.value;
+      this.spending.amount = controls.isIncome.value ? controls.amount.value : -controls.amount.value;
       this.disableCloseDialog = true;
       this.dialogRef.disableClose = true;
 
-      // Attempt to save Spending
       this.saveToBackend();
     } else {
       this.error = 'Please provide all Inputs with valid data';
@@ -69,11 +61,11 @@ export class NewSpendingComponent implements OnInit {
 
   saveToBackend() {
     if (this.data.operation === EOperation.NEW) {
-      this.spendingService.addSpending(this.currentSpending).subscribe((response) => {
+     this.spendingService.addSpending(this.spending).subscribe((response) => {
         this.handleResponse(response);
       });
     } else {
-      this.spendingService.updateSpending(this.currentSpending).subscribe((response) => {
+     this.spendingService.updateSpending(this.spending).subscribe((response) => {
         this.handleResponse(response);
       });
     }
@@ -81,15 +73,15 @@ export class NewSpendingComponent implements OnInit {
 
   handleResponse(response: HttpResponse<ISpending>): void {
     if (response.status === 200) {
-      this.success = 'success';
-      this.error = '';
+      this.success = 'Success';
+      this.error = undefined;
       setTimeout(() => {
         this.disableCloseDialog = false;
         this.dialogRef.disableClose = false;
-        this.dialogRef.close(this.currentSpending);
+        this.dialogRef.close(this.spending);
       }, 1000);
     } else {
-      this.error = 'Couldn\'t save changes';
+      this.error = `Couldn\'t save changes`;
       this.disableCloseDialog = false;
       this.dialogRef.disableClose = false;
     }
@@ -98,5 +90,4 @@ export class NewSpendingComponent implements OnInit {
   initNewSpending(): ISpending {
     return { description: '', amount: 0, date: new Date(), type: ESpendingType.SINGLE, id: 0};
   }
-
 }
