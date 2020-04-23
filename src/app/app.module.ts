@@ -45,7 +45,7 @@ import { SummaryComponent } from './summary/summary.component';
     ReactiveFormsModule,
     AppRoutingModule,
     MatRadioModule,
-  JwtModule.forRoot({
+    JwtModule.forRoot({
       config: {
         tokenGetter: () => localStorage.getItem('token'),
         whitelistedDomains: ['localhost:4200'],

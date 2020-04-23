@@ -17,16 +17,15 @@ export class LoginService {
   constructor(private http: HttpClient, public jwtHelper: JwtHelperService) {
   }
 
-  register(email: string, password: string): void {
-    // TODO: implement register method
-  }
-
-  login(email: string, password: string): Promise<string> {
-    const credentials: IUserCredentials = { email, password};
+  authenticate(email: string, password: string, register: boolean = false): Promise<string> {
+    const credentials: IUserCredentials = { email, password };
 
     return new Promise<string>((resolve, reject) => {
-      this.http.post<{ value: string }>(this.loginUrl, credentials, this.httpOptions)
-        .subscribe((response) => {
+      const action = register ?
+        this.http.put<{ value: string }>(this.loginUrl, credentials, this.httpOptions) :
+        this.http.post<{ value: string }>(this.loginUrl, credentials, this.httpOptions);
+
+      action.subscribe((response) => {
           resolve(response.value);
         }, (error) => {
           reject(error);
