@@ -1,27 +1,29 @@
-<div>
-  <h2>Summary</h2>
+<div class="summary-container">
   <div>
-    <div>Total spendings</div>
-    <div>{{this.spendingsTotal | currency:'Chf '}}</div>
-  </div>
-  <div>
-    <div>Past spendings</div>
-    <div>{{this.spendingsPast | currency:'Chf '}}</div>
-  </div>
-  <div>
-    <div>Future spendings</div>
-    <div>{{this.spendingsFuture | currency:'Chf '}}</div>
-  </div>
-  <div>
-    <div>Spendings this Week</div>
-    <div>{{this.spendingsCurrentWeek | currency:'Chf '}}</div>
-  </div>
-  <div>
-    <div>Spendings this Month</div>
-    <div>{{this.spendingsCurrentMonth | currency:'Chf '}}</div>
-  </div>
-  <div>
-    <div>Spendings this Year</div>
-    <div>{{this.spendingsCurrentYear | currency:'Chf '}}</div>
+    <h2>Summary</h2>
+    <div class="summary-item">
+      <div class="summary-title">Total amount</div>
+      <div class="summary-value" [ngClass]="{positive: this.spendingsTotal >= 0}">{{this.spendingsTotal | currency:'Chf '}}</div>
+    </div>
+    <div class="summary-item">
+      <div class="summary-title">Past amount</div>
+      <div class="summary-value" [ngClass]="{positive: this.spendingsPast >= 0}">{{this.spendingsPast | currency:'Chf '}}</div>
+    </div>
+    <div class="summary-item">
+      <div class="summary-title">Future amount</div>
+      <div class="summary-value" [ngClass]="{positive: this.spendingsFuture >= 0}">{{this.spendingsFuture | currency:'Chf '}}</div>
+    </div>
+    <div class="summary-item">
+      <div class="summary-title">amount this Week</div>
+      <div class="summary-value" [ngClass]="{positive: this.spendingsCurrentWeek >= 0}">{{this.spendingsCurrentWeek | currency:'Chf '}}</div>
+    </div>
+    <div class="summary-item">
+      <div class="summary-title">amount this Month</div>
+      <div class="summary-value" [ngClass]="{positive: this.spendingsCurrentMonth >= 0}">{{this.spendingsCurrentMonth | currency:'Chf '}}</div>
+    </div>
+    <div class="summary-item">
+      <div class="summary-title">amount this Year</div>
+      <div class="summary-value" [ngClass]="{positive: this.spendingsCurrentYear >= 0}">{{this.spendingsCurrentYear | currency:'Chf '}}</div>
+    </div>
   </div>
 </div>

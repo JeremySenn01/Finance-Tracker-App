@@ -1,9 +1,9 @@
-img {
+mat-icon {
   width: 15px;
   margin-right: 6px;
 }
 
-img:hover {
+mat-icon:hover {
   cursor: pointer;
   -ms-overflow-style: none;
 }

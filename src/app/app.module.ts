@@ -8,6 +8,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
@@ -48,6 +49,7 @@ import { SummaryComponent } from './summary/summary.component';
     ReactiveFormsModule,
     AppRoutingModule,
     MatRadioModule,
+    MatIconModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: () => localStorage.getItem('token'),

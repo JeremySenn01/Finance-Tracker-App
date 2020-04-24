@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { EOperation, IDialogProps, images, ISpending } from '../data.module';
+import { EOperation, IDialogProps, ISpending } from '../data.module';
 import { NewSpendingComponent } from '../new-spending/new-spending.component';
 import { SpendingService } from '../Service/spending.service';
 
@@ -12,7 +12,6 @@ import { SpendingService } from '../Service/spending.service';
 export class SpendingsComponent {
   @Input() spendings: ISpending[];
   @Output() spendingsChange = new EventEmitter<any>();
-  Images = images;
 
   constructor(private spendingService: SpendingService,
               public dialog: MatDialog) {

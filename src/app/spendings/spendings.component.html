@@ -6,8 +6,8 @@
       <div><span>{{spending.date | date:'dd/MM/yyyy'}}</span></div>
     </div>
     <div>
-      <img (click)="editSpending(spending)" [src]="Images.EDIT" alt="Edit"/>
-      <img (click)="deleteSpending(spending)" [src]="Images.DELETE" alt="Delete"/>
+      <mat-icon (click)="editSpending(spending)">edit</mat-icon>
+      <mat-icon (click)="deleteSpending(spending)">delete</mat-icon>
     </div>
   </div>
 </div>

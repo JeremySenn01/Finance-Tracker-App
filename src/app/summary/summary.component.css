@@ -1,0 +1,26 @@
+.summary-container {
+  padding: 20px;
+  background-color: whitesmoke;
+}
+
+.summary-item:not(:first-child) {
+  padding-top: 3px;
+  border-top: 1px solid grey;
+  margin-top: 3px;
+  font-size: 15px;
+}
+
+.summary-title {
+}
+
+.summary-value.positive {
+  color: green;
+}
+
+.summary-value {
+  font-size: 17px;
+}
+
+.summary-value:not(.positive) {
+  color: red;
+}
