@@ -6,11 +6,17 @@
 .header > h1 {
   font-size: 24px;
   margin: 0 40px;
+  display: inline-block;
 
 }
 
-.header > div {
+.header-right {
   margin: 0 40px;
+}
+
+.header-right > mat-icon {
+  margin-right: 20px;
+  padding: 0 5px 0 5px;
 }
 
 .header:hover {
@@ -23,6 +29,7 @@
   color: white;
   border-bottom: 2px solid lightgrey;
   padding: 20px;
+  display: inline-block;
 }
 
 .content-header {

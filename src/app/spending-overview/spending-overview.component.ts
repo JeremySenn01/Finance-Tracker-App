@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
 import { EOperation, ETimeUnit, IDialogProps, ISpending } from '../data.module';
+import { HelpComponent } from '../help/help.component';
 import { NewSpendingComponent } from '../new-spending/new-spending.component';
 import { LoginService } from '../Service/login.service';
 import { SpendingService } from '../Service/spending.service';
@@ -54,6 +55,13 @@ export class SpendingOverviewComponent implements OnInit {
       if (result) {
         this.getSpendings();
       }
+    });
+  }
+
+  openHelp(): void {
+    this.dialog.open(HelpComponent, {
+      height: '400px',
+      width: '400px',
     });
   }
 

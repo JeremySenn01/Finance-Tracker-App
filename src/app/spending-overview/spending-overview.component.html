@@ -1,7 +1,10 @@
 <div>
   <div class="header" fxLayout="row" fxLayoutAlign="space-between center">
     <h1>Finance Tracker</h1>
-    <div (click)="logout()">Logout</div>
+    <div class="header-right" fxLayout="row">
+      <mat-icon (click)="openHelp()">help</mat-icon>
+      <div (click)="logout()">Logout</div>
+    </div>
   </div>
 
   <div class="content" fxLayout="column" fxLayoutAlign="start center">
@@ -10,11 +13,14 @@
         <button mat-button (click)="back()"><</button>
         <mat-button-toggle-group>
           <mat-button-toggle [checked]="timeUnit === TimeUnitEnum.WEEK"
-                             (click)="setTimeUnit(TimeUnitEnum.WEEK)" value="Week">Week</mat-button-toggle>
+                             (click)="setTimeUnit(TimeUnitEnum.WEEK)" value="Week">Week
+          </mat-button-toggle>
           <mat-button-toggle [checked]="timeUnit === TimeUnitEnum.MONTH"
-                             (click)="setTimeUnit(TimeUnitEnum.MONTH)" value="Month">Month</mat-button-toggle>
+                             (click)="setTimeUnit(TimeUnitEnum.MONTH)" value="Month">Month
+          </mat-button-toggle>
           <mat-button-toggle [checked]="timeUnit === TimeUnitEnum.YEAR"
-                             (click)="setTimeUnit(TimeUnitEnum.YEAR)" value="Year">Year</mat-button-toggle>
+                             (click)="setTimeUnit(TimeUnitEnum.YEAR)" value="Year">Year
+          </mat-button-toggle>
         </mat-button-toggle-group>
         <button mat-button (click)="forward()">></button>
         <div fxLayout="row" fxLayoutAlign="center center">

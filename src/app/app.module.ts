@@ -17,6 +17,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { JwtModule } from '@auth0/angular-jwt';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { HelpComponent } from './help/help.component';
 import { LoginComponent } from './login/login.component';
 import { NewSpendingComponent } from './new-spending/new-spending.component';
 import { SpendingOverviewComponent } from './spending-overview/spending-overview.component';
@@ -31,6 +32,7 @@ import { SummaryComponent } from './summary/summary.component';
     SummaryComponent,
     SpendingOverviewComponent,
     LoginComponent,
+    HelpComponent,
   ],
   imports: [
     FlexLayoutModule,
