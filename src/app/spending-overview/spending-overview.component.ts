@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 import * as moment from 'moment';
 import { EOperation, ETimeUnit, IDialogProps, ISpending } from '../data.module';
 import { NewSpendingComponent } from '../new-spending/new-spending.component';
@@ -26,7 +25,6 @@ export class SpendingOverviewComponent implements OnInit {
 
   constructor(private spendingService: SpendingService,
               private loginService: LoginService,
-              private router: Router,
               public dialog: MatDialog) {
   }
 
@@ -58,15 +56,7 @@ export class SpendingOverviewComponent implements OnInit {
   }
 
   logout(): void {
-    this.loginService.logout().subscribe((response) => {
-      if (response) {
-        this.router.navigate(['/login']).then(() => {
-          this.loginService.clearToken();
-        });
-      } else {
-        console.log('Failed to logout');
-      }
-    });
+    this.loginService.logout();
   }
 
   setTimeUnit(timeUnit: ETimeUnit): void {
