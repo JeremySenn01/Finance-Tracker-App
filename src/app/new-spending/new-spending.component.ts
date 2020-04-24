@@ -25,7 +25,7 @@ export class NewSpendingComponent implements OnInit {
 
   ngOnInit(): void {
     const isNewSpending = !(this.data && this.data.operation === EOperation.UPDATE);
-    const spending =  isNewSpending ?
+    const spending = isNewSpending ?
       this.initNewSpending() :
       this.data.spending;
 
@@ -39,7 +39,7 @@ export class NewSpendingComponent implements OnInit {
     this.spendingForm = new FormGroup({
       description: new FormControl(description, [Validators.required]),
       amount: new FormControl(amount, [Validators.required]),
-      date: new  FormControl(date, [Validators.required]),
+      date: new FormControl(date, [Validators.required]),
       isIncome: new FormControl(isIncome, [Validators.required]),
     });
   }
@@ -60,18 +60,23 @@ export class NewSpendingComponent implements OnInit {
   }
 
   saveToBackend() {
-    if (this.data.operation === EOperation.NEW) {
-     this.spendingService.addSpending(this.spending).subscribe((response) => {
-        this.handleResponse(response);
-      });
-    } else {
-     this.spendingService.updateSpending(this.spending).subscribe((response) => {
-        this.handleResponse(response);
-      });
-    }
+    const action = this.data.operation === EOperation.NEW ?
+      this.spendingService.addSpending(this.spending) :
+      this.spendingService.updateSpending(this.spending);
+
+    action.subscribe(
+      (response) => this.handleSuccess(response),
+      () => this.handleError(),
+    );
   }
 
-  handleResponse(response: HttpResponse<ISpending>): void {
+  handleError() {
+    this.error = `Couldn\'t save changes`;
+    this.disableCloseDialog = false;
+    this.dialogRef.disableClose = false;
+  }
+
+  handleSuccess(response: HttpResponse<ISpending>): void {
     if (response.status === 200) {
       this.success = 'Success';
       this.error = undefined;
@@ -81,9 +86,7 @@ export class NewSpendingComponent implements OnInit {
         this.dialogRef.close(this.spending);
       }, 1000);
     } else {
-      this.error = `Couldn\'t save changes`;
-      this.disableCloseDialog = false;
-      this.dialogRef.disableClose = false;
+      this.handleError();
     }
   }
 

@@ -34,9 +34,16 @@ export class LoginComponent implements OnInit {
         .then((token: string) => {
           this.loginService.setToken(token);
           this.router.navigate(['spendings']).then();
-        }).catch(() => this.error = register ?
-        `User with this email already exists` :
-        'Username or Password incorrect');
+        })
+        .catch((error) => {
+          if (error.status === 0) {
+            this.error = 'The service is currently unavailable.\nPlease try again later!';
+          } else {
+            this.error = register ?
+              `User with this email already exists` :
+              'Username or Password incorrect';
+          }
+        });
     } else {
       this.error = 'Please validate the input';
     }

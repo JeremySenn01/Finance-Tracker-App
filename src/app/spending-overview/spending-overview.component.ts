@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 import * as moment from 'moment';
 import { EOperation, ETimeUnit, IDialogProps, ISpending } from '../data.module';
 import { HelpComponent } from '../help/help.component';
@@ -15,8 +14,8 @@ import { SpendingService } from '../Service/spending.service';
 })
 export class SpendingOverviewComponent implements OnInit {
 
-  spendings: ISpending[];
-  filteredSpendings: ISpending[];
+  spendings: ISpending[] = [];
+  filteredSpendings: ISpending[] = [];
   timeUnit: ETimeUnit = ETimeUnit.MONTH;
   TimeUnitEnum = ETimeUnit;
   selectedWeek: number;
@@ -27,7 +26,6 @@ export class SpendingOverviewComponent implements OnInit {
 
   constructor(private spendingService: SpendingService,
               private loginService: LoginService,
-              private router: Router,
               public dialog: MatDialog) {
   }
 
@@ -66,15 +64,7 @@ export class SpendingOverviewComponent implements OnInit {
   }
 
   logout(): void {
-    this.loginService.logout().subscribe((response) => {
-      if (response) {
-        this.router.navigate(['/login']).then(() => {
-          this.loginService.clearToken();
-        });
-      } else {
-        console.log('Failed to logout');
-      }
-    });
+    this.loginService.logout();
   }
 
   setTimeUnit(timeUnit: ETimeUnit): void {
