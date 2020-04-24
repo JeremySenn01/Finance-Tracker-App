@@ -1,7 +1,7 @@
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { Observable } from 'rxjs';
 import { IUserCredentials } from '../data.module';
 
 @Injectable({
@@ -15,7 +15,9 @@ export class LoginService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json'}),
   };
 
-  constructor(private http: HttpClient, public jwtHelper: JwtHelperService) {
+  constructor(private http: HttpClient,
+              public jwtHelper: JwtHelperService,
+              private router: Router) {
   }
 
   authenticate(email: string, password: string, register: boolean = false): Promise<string> {
@@ -34,11 +36,14 @@ export class LoginService {
     });
   }
 
-  logout(): Observable<any> {
-    return this.http.delete<any>(this.loginUrl, {
+  logout() {
+    this.http.delete<any>(this.loginUrl, {
       headers: new HttpHeaders({ Authorization: this.getToken()}),
       observe: 'response',
-    });
+    }).subscribe();
+
+    this.clearToken();
+    this.router.navigate(['/login']).then();
   }
 
   isAuthenticated(): boolean {
