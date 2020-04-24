@@ -13,8 +13,8 @@ import { SpendingService } from '../Service/spending.service';
 })
 export class SpendingOverviewComponent implements OnInit {
 
-  spendings: ISpending[];
-  filteredSpendings: ISpending[];
+  spendings: ISpending[] = [];
+  filteredSpendings: ISpending[] = [];
   timeUnit: ETimeUnit = ETimeUnit.MONTH;
   TimeUnitEnum = ETimeUnit;
   selectedWeek: number;
