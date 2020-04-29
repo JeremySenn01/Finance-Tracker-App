@@ -1,12 +1,9 @@
 import { HttpClientModule } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatButtonModule } from '@angular/material/button';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatIconModule } from '@angular/material/icon';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import * as moment from 'moment';
@@ -20,11 +17,11 @@ import { SummaryComponent } from '../summary/summary.component';
 import { SpendingOverviewComponent } from './spending-overview.component';
 import createSpyObj = jasmine.createSpyObj;
 
-xdescribe('SpendingOverviewComponent', () => {
+fdescribe('SpendingOverviewComponent', () => {
   let component: SpendingOverviewComponent;
   let fixture: ComponentFixture<SpendingOverviewComponent>;
   let mockSpendingService: jasmine.SpyObj<SpendingService>;
-  let  mockMatDialog: jasmine.SpyObj<MatDialog>;
+  let mockMatDialog: jasmine.SpyObj<MatDialog>;
 
   const mockSpendings: ISpending[] = [
     {
@@ -64,6 +61,9 @@ xdescribe('SpendingOverviewComponent', () => {
       ],
       imports: [
         HttpClientModule,
+        MatButtonModule,
+        MatButtonToggleModule,
+        MatIconModule,
         RouterTestingModule.withRoutes([]),
       ],
       providers: [
@@ -88,10 +88,10 @@ xdescribe('SpendingOverviewComponent', () => {
     it('should change timeUnit and filter spendings', async (done: DoneFn) => {
       await initTest();
 
-      const buttonGroup = fixture.debugElement.query(By.css('.buttonGroup'));
-      const weekButton = buttonGroup.query(By.css('button:first-child')).nativeElement;
-      const monthButton = buttonGroup.query(By.css('button:nth-child(2)')).nativeElement;
-      const yearButton = buttonGroup.query(By.css('button:last-child')).nativeElement;
+      const buttonGroup = fixture.debugElement.query(By.css('mat-button-toggle-group'));
+      const weekButton = buttonGroup.query(By.css('mat-button-toggle:first-child')).nativeElement;
+      const monthButton = buttonGroup.query(By.css('mat-button-toggle:nth-child(2)')).nativeElement;
+      const yearButton = buttonGroup.query(By.css('mat-button-toggle:last-child')).nativeElement;
       expect(weekButton).toBeTruthy();
       expect(monthButton).toBeTruthy();
       expect(yearButton).toBeTruthy();
@@ -193,7 +193,7 @@ xdescribe('SpendingOverviewComponent', () => {
       component.startDate = moment('2015-03-01').toDate();
       component.endDate = moment('2015-03-31').toDate();
 
-      const weekButton = fixture.debugElement.query(By.css('.buttonGroup > button:first-child')).nativeElement;
+      const weekButton = fixture.debugElement.query(By.css('mat-button-toggle-group > mat-button-toggle:first-child')).nativeElement;
       weekButton.click();
 
       compareDate(component.startDate, '2020-04-20');
@@ -202,8 +202,8 @@ xdescribe('SpendingOverviewComponent', () => {
     });
 
     function getChangeDateButtons(): { backButton: any, forwardButton: any } {
-      const backButton = fixture.debugElement.query(By.css('.spendingNav > button:first-child')).nativeElement;
-      const forwardButton = fixture.debugElement.query(By.css('.spendingNav > button:last-child')).nativeElement;
+      const backButton = fixture.debugElement.query(By.css('.spendingNav > button:first-of-type')).nativeElement;
+      const forwardButton = fixture.debugElement.query(By.css('.spendingNav > button:last-of-type')).nativeElement;
 
       return { backButton, forwardButton};
     }
