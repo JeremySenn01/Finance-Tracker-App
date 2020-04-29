@@ -18,7 +18,7 @@ describe('SpendingsComponent', () => {
         SpendingsComponent,
       ],
       providers: [
-        SpendingService,
+        { provide: SpendingService, useValue: { }},
         { provide: MatDialog, useValue: { }},
       ],
     })
