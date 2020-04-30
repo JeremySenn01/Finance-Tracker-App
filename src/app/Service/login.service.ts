@@ -39,7 +39,6 @@ export class LoginService {
   logout() {
     this.http.delete<any>(this.loginUrl, {
       headers: new HttpHeaders({ Authorization: this.getToken()}),
-      observe: 'response',
     }).subscribe();
 
     this.clearToken();

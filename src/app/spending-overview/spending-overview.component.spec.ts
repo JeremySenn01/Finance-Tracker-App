@@ -17,7 +17,7 @@ import { SummaryComponent } from '../summary/summary.component';
 import { SpendingOverviewComponent } from './spending-overview.component';
 import createSpyObj = jasmine.createSpyObj;
 
-fdescribe('SpendingOverviewComponent', () => {
+describe('SpendingOverviewComponent', () => {
   let component: SpendingOverviewComponent;
   let fixture: ComponentFixture<SpendingOverviewComponent>;
   let mockSpendingService: jasmine.SpyObj<SpendingService>;

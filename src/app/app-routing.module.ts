@@ -4,7 +4,7 @@ import { LoginComponent } from './login/login.component';
 import { AuthGuardService } from './Service/auth-guard.service';
 import { SpendingOverviewComponent } from './spending-overview/spending-overview.component';
 
-const routes: Routes = [
+export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full'},
   {
     path: 'spendings',
